@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const conn = require('./db');
+const port = process.env.PORT || 3000
 
 app.use(express.json());
 
@@ -135,4 +136,4 @@ app.post('/store-komen', function(req, res){
     })
 })
 
-app.listen(3000);
+app.listen(port);
