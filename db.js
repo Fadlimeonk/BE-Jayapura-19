@@ -1,11 +1,12 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const conn = mysql.createPool({
-    host: "localhost",
+    host: "containers-us-west-39.railway.app",
     user: "root",
-    password: "root",
-    database: "shipping",
-    charset: "utf8mb4",
-    timezone: "+07:00"
+    password: "iJspnELeoDw2euvyslIQ",
+    database: "railway",
+    //charset: "utf8mb4",
+    //timezone: "+07:00",
+    port: "7150"
 });
 
 conn.getConnection( (err) => {
