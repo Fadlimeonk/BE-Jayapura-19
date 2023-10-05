@@ -1,9 +1,13 @@
 const express = require('express');
 const app = express();
 const conn = require('./db');
+const cors = require('cors')
 const port = process.env.PORT || 3000
 
 app.use(express.json());
+app.use(cors({
+    origin: '*',
+}))
 
 // API Print Paket by Resi
 app.get('/get-paket-by-resi', function(req, res){
@@ -18,12 +22,14 @@ app.get('/get-paket-by-resi', function(req, res){
             console.log(err);
             res.error(err.sqlMessage, res);
         }
-        res.status(200).json({
+        else{
+            res.status(200).json({
             "success": true,
             "message": "Sukses menampilkan data paket",
             "data": results
-        })
-    })
+            });
+        }
+    });
 })
 
 // API Menampilkan Komentar
