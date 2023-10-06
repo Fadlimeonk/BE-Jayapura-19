@@ -9,6 +9,24 @@ app.use(cors({
     origin: '*',
 }))
 
+// API Menampilkan All Paket
+app.get('/get-paket', function(req, res){
+    const queryStr = "SELECT resi, tanggal, penerima, status FROM paket";
+    conn.query(queryStr, (err, results) => {
+        if (err){
+            console.log(err);
+            res.error(err.sqlMessage, res);
+        }
+        else{
+            res.status(200).json({
+                "success": true,
+                "message": "Sukses menampilkan semua data paket",
+                "data": results
+            });
+        }
+    });
+})
+
 // API Print Paket by Resi
 app.get('/get-paket-by-resi', function(req, res){
     const param = req.query;
@@ -30,6 +48,32 @@ app.get('/get-paket-by-resi', function(req, res){
             });
         }
     });
+})
+
+// API Menyimpan Paket
+app.post('/store-paket', function(req, res){
+    const param = req.body;
+    const resi = param.resi;
+    const penerima = param.penerima;
+    const status = param.status;
+    const now = new Date();
+
+    const queryStr = "INSERT INTO paket (resi, tanggal, penerima, status) VALUE (?, ?, ?, ?)";
+    const values = [resi, now, penerima, status];
+
+    conn.query(queryStr, values, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.error(err.sqlMessage, res);
+        }
+        else{
+            res.status(200).json({
+                "success": true,
+                "message": "Sukses menyimpan data",
+                "data": results
+            });
+        }
+    })
 })
 
 // API Menampilkan Komentar
